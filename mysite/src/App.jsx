@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import maryana from "./assets/maryana.png";
+import imagestore from "./assets/imagestore.jpg"
+import blog from "./assets/blog.jpg"
+
+
 
 const GithubIcon = () => (
-  <svg viewBox="0 0 24 24">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
     <path
       fill="currentColor"
       d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
@@ -11,8 +15,9 @@ const GithubIcon = () => (
   </svg>
 );
 
+
 const TelegramIcon = () => (
-  <svg viewBox="0 0 24 24">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
     <path
       fill="currentColor"
       d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"
@@ -20,8 +25,9 @@ const TelegramIcon = () => (
   </svg>
 );
 
+
 const ArrowIcon = () => (
-  <svg viewBox="0 0 24 24">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
     <path
       d="M5 12h14M13 6l6 6-6 6"
       fill="none"
@@ -32,6 +38,10 @@ const ArrowIcon = () => (
     />
   </svg>
 );
+
+
+
+
 
 const skills = [
   ["HTML5", "◇"],
@@ -47,37 +57,63 @@ const skills = [
   ["VS Code", "⌘"],
 ];
 
+
 const projects = [
   {
     title: "Clothing Store",
     type: "E-commerce Website",
+    image:imagestore,
+
     tags: ["React", "JavaScript", "CSS", "Vite"],
     description:
       "Responsive clothing store with catalog, authentication and reusable UI components.",
-    link: "#",
+    link: "https://github.com/qmeoliw?tab=repositories",
   },
+
   {
     title: "Book Club",
     type: "Full-Stack Web App",
+    image:blog,
     tags: ["React", "Express", "MySQL", "Node.js"],
     description:
       "Full-stack book club application with REST API and database integration.",
-    link: "https://github.com/qmeoliw/booksClub",
+    link: "https://github.com/qmeoliw?tab=repositories",
   },
+
   {
     title: "Personal Server",
     type: "Backend Project",
+    image:null,
     tags: ["Node.js", "Express", "JavaScript"],
     description:
       "Personal backend server with API endpoints and client-server communication.",
-    link: "#",
+    link: "https://github.com/qmeoliw?tab=repositories",
   },
 ];
 
+
+
 function App() {
   const [dark, setDark] = useState(true);
+
   const [menuOpen, setMenuOpen] = useState(false);
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+
+  const [mouse, setMouse] = useState({
+    x: 0,
+    y: 0,
+  });
+
+
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [formStatus, setFormStatus] = useState("idle");
+
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -88,15 +124,24 @@ function App() {
           }
         });
       },
-      { threshold: 0.12 }
+      {
+        threshold: 0.12,
+      }
     );
 
-    document.querySelectorAll(".reveal").forEach((element) => {
+    const elements = document.querySelectorAll(".reveal");
+
+    elements.forEach((element) => {
       observer.observe(element);
     });
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, []);
+
+
+
 
   const handleMouseMove = (event) => {
     setMouse({
@@ -105,32 +150,79 @@ function App() {
     });
   };
 
-  const handleSubmit = (event) => {
+
+
+
+  const handleContactSubmit = async (event) => {
     event.preventDefault();
 
-    const data = new FormData(event.currentTarget);
+    if (formStatus === "sending") {
+      return;
+    }
 
-    const subject = encodeURIComponent(
-      `Portfolio contact from ${data.get("name")}`
-    );
+    setFormStatus("sending");
 
-    const body = encodeURIComponent(
-      `Name: ${data.get("name")}
-Email: ${data.get("email")}
+    try {
+      const response = await fetch(
+        "https://formspree.io/f/mdenjpqr",
+        {
+          method: "POST",
 
-${data.get("message")}`
-    );
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
 
-    window.location.href =
-      `mailto:gmeollie@yandex.ru?subject=${subject}&body=${body}`;
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Form submission failed");
+      }
+
+      setFormStatus("success");
+
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+      });
+
+    } catch (error) {
+      console.error("Contact form error:", error);
+
+      setFormStatus("error");
+    }
   };
+
+
+
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormData((previous) => ({
+      ...previous,
+      [name]: value,
+    }));
+  };
+
+
+
 
   return (
     <div
       className={dark ? "app dark" : "app light"}
       onMouseMove={handleMouseMove}
     >
-      {/* CURSOR GLOW */}
+
+  
+
       <div
         className="cursor-glow"
         style={{
@@ -139,54 +231,99 @@ ${data.get("message")}`
         }}
       />
 
-      {/* NAVBAR */}
+
+
+
       <header className="navbar">
-        <a href="#top" className="logo">
+
+        <a
+          href="#top"
+          className="logo"
+        >
           MARYANA<span></span>
         </a>
 
-        <nav className={menuOpen ? "nav-links open" : "nav-links"}>
-          <a href="#about" onClick={() => setMenuOpen(false)}>
+
+        <nav
+          className={
+            menuOpen
+              ? "nav-links open"
+              : "nav-links"
+          }
+        >
+
+          <a
+            href="#about"
+            onClick={() => setMenuOpen(false)}
+          >
             About
           </a>
 
-          <a href="#skills" onClick={() => setMenuOpen(false)}>
+          <a
+            href="#skills"
+            onClick={() => setMenuOpen(false)}
+          >
             Skills
           </a>
 
-          <a href="#projects" onClick={() => setMenuOpen(false)}>
+          <a
+            href="#projects"
+            onClick={() => setMenuOpen(false)}
+          >
             Projects
           </a>
 
-          <a href="#contact" onClick={() => setMenuOpen(false)}>
+          <a
+            href="#contact"
+            onClick={() => setMenuOpen(false)}
+          >
             Contact
           </a>
+
         </nav>
 
+
         <div className="nav-actions">
+
           <button
+            type="button"
             className="theme-btn"
-            onClick={() => setDark(!dark)}
+            onClick={() => setDark((previous) => !previous)}
+            aria-label="Toggle theme"
           >
             {dark ? "☼" : "☾"}
           </button>
 
-          <a className="cv-btn" href="/Maryana_Tikhomirova_CV.pdf">
+
+          <a
+            className="cv-btn"
+            href="/Maryana_Tikhomirova_CV.pdf"
+            target="_blank"
+            rel="noreferrer"
+          >
             Download CV
           </a>
 
+
           <button
+            type="button"
             className="menu-btn"
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={() => setMenuOpen((previous) => !previous)}
+            aria-label="Open menu"
           >
             ☰
           </button>
+
         </div>
+
       </header>
+
 
       <main id="top">
 
-        {/* HERO */}
+
+
+
         <section className="hero section">
 
           <div className="hero-copy reveal">
@@ -195,9 +332,11 @@ ${data.get("message")}`
               FRONTEND DEVELOPER
             </div>
 
+
             <h1>
               Hi, I'm <span>Maryana</span>
             </h1>
+
 
             <h2>
               I build modern
@@ -205,24 +344,34 @@ ${data.get("message")}`
               responsive web apps.
             </h2>
 
+
             <p>
-              IT student focused on frontend development and web design.
-              I create clean, responsive interfaces and full-stack
-              learning projects.
+              IT student focused on frontend development
+              and web design. I create clean, responsive
+              interfaces and full-stack learning projects.
             </p>
+
 
             <div className="hero-buttons">
 
-              <a href="#projects" className="primary-btn">
+              <a
+                href="#projects"
+                className="primary-btn"
+              >
                 View Projects
                 <ArrowIcon />
               </a>
 
-              <a href="#contact" className="secondary-btn">
+
+              <a
+                href="#contact"
+                className="secondary-btn"
+              >
                 Contact Me
               </a>
 
             </div>
+
 
             <div className="socials">
 
@@ -230,14 +379,17 @@ ${data.get("message")}`
                 href="https://github.com/qmeoliw"
                 target="_blank"
                 rel="noreferrer"
+                aria-label="GitHub"
               >
                 <GithubIcon />
               </a>
+
 
               <a
                 href="https://t.me/pipwekism"
                 target="_blank"
                 rel="noreferrer"
+                aria-label="Telegram"
               >
                 <TelegramIcon />
               </a>
@@ -246,18 +398,21 @@ ${data.get("message")}`
 
           </div>
 
-          {/* PHOTO */}
+
+  
 
           <div className="hero-photo-wrap reveal">
 
             <div className="photo-glow" />
 
+
             <div className="photo-frame">
 
               <img
                 src={maryana}
-                alt="Maryana Tikhomirova"
+                alt="Maryana"
               />
+
 
               <div className="status-card">
 
@@ -271,14 +426,17 @@ ${data.get("message")}`
 
             </div>
 
+
             <div className="floating-dot dot-one" />
+
             <div className="floating-dot dot-two" />
 
           </div>
 
         </section>
 
-        {/* ABOUT */}
+
+
 
         <section
           id="about"
@@ -289,9 +447,11 @@ ${data.get("message")}`
             ● ABOUT ME
           </div>
 
+
           <h2 className="section-title">
             Who I am
           </h2>
+
 
           <div className="about-grid">
 
@@ -301,6 +461,7 @@ ${data.get("message")}`
               Currently improving my skills in React,
               Node.js and modern web technologies.
             </p>
+
 
             <div className="info-cards">
 
@@ -320,6 +481,7 @@ ${data.get("message")}`
 
               </article>
 
+
               <article className="info-card">
 
                 <span className="card-icon">
@@ -335,6 +497,7 @@ ${data.get("message")}`
                 </p>
 
               </article>
+
 
               <article className="info-card">
 
@@ -352,6 +515,7 @@ ${data.get("message")}`
 
               </article>
 
+
               <article className="info-card">
 
                 <span className="card-icon">
@@ -363,7 +527,7 @@ ${data.get("message")}`
                 </h3>
 
                 <p>
-                  Russia · Remote
+                  Remote
                 </p>
 
               </article>
@@ -374,7 +538,8 @@ ${data.get("message")}`
 
         </section>
 
-        {/* SKILLS */}
+
+
 
         <section
           id="skills"
@@ -385,9 +550,11 @@ ${data.get("message")}`
             ● MY SKILLS
           </div>
 
+
           <h2 className="section-title">
             Technologies I work with
           </h2>
+
 
           <div className="skills-grid">
 
@@ -414,7 +581,8 @@ ${data.get("message")}`
 
         </section>
 
-        {/* PROJECTS */}
+
+
 
         <section
           id="projects"
@@ -435,11 +603,13 @@ ${data.get("message")}`
 
             </div>
 
+
             <span className="project-count">
               03 PROJECTS
             </span>
 
           </div>
+
 
           <div className="projects-grid">
 
@@ -450,34 +620,50 @@ ${data.get("message")}`
                 key={project.title}
               >
 
-                <div className="project-image">
+<div className="project-image">
 
-                  <div className="image-placeholder">
+  {project.image ? (
+    <img
+      src={project.image}
+      alt={project.title}
+    />
+  ) : (
+    <div className="project-placeholder">
+      <span className="placeholder-number">
+        0{index + 1}
+      </span>
 
-                    <span>
-                      0{index + 1}
-                    </span>
+      <div className="placeholder-content">
+        <span className="placeholder-code">
+          {"</>"}
+        </span>
 
-                    <small>
-                      Add project screenshot
-                    </small>
+        {/* <span>
+          Backend Project
+        </span> */}
 
-                  </div>
+        <small>
+          Screenshot coming soon
+        </small>
+      </div>
+    </div>
+  )}
 
-                  <div className="project-overlay">
+  <div className="project-overlay">
 
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      View project
-                      <ArrowIcon />
-                    </a>
+    <a
+      href={project.link}
+      target="_blank"
+      rel="noreferrer"
+    >
+      View project
+      <ArrowIcon />
+    </a>
 
-                  </div>
+  </div>
 
-                </div>
+</div>
+
 
                 <div className="project-content">
 
@@ -485,13 +671,16 @@ ${data.get("message")}`
                     {project.type}
                   </span>
 
+
                   <h3>
                     {project.title}
                   </h3>
 
+
                   <p>
                     {project.description}
                   </p>
+
 
                   <div className="tags">
 
@@ -504,6 +693,7 @@ ${data.get("message")}`
                     ))}
 
                   </div>
+
 
                   <a
                     className="text-link"
@@ -525,7 +715,7 @@ ${data.get("message")}`
 
         </section>
 
-        {/* CONTACT */}
+
 
         <section
           id="contact"
@@ -538,90 +728,197 @@ ${data.get("message")}`
               ● CONTACT ME
             </div>
 
+
             <h2 className="section-title">
               Let's work together!
             </h2>
+
 
             <p>
               I'm open to internships, freelance projects
               and new opportunities.
             </p>
 
+
             <div className="contact-links">
 
-              <a href="mailto:gmeollie@yandex.ru">
+              <a href="mailto:gmeoliw@yandex.ru">
+
                 ✉
+
                 <span>
                   gmeoliw@yandex.ru
                 </span>
+
               </a>
 
+
               <a
-                href="https://t.me/pipwekiism"
+                href="https://t.me/pipwekism"
                 target="_blank"
                 rel="noreferrer"
               >
+
                 ➤
+
                 <span>
                   @pipwekism
                 </span>
+
               </a>
+
 
               <a
                 href="https://github.com/qmeoliw"
                 target="_blank"
                 rel="noreferrer"
               >
+
                 ◉
+
                 <span>
                   github.com/qmeoliw
                 </span>
+
               </a>
 
             </div>
 
           </div>
 
-          <form
-            className="contact-form"
-            onSubmit={handleSubmit}
-          >
 
-            <input
-              name="name"
-              required
-              placeholder="Your name"
-            />
+      
 
-            <input
-              name="email"
-              type="email"
-              required
-              placeholder="Your email"
-            />
+          <div className="contact-form-wrapper">
 
-            <textarea
-              name="message"
-              required
-              rows="5"
-              placeholder="Your message"
-            />
 
-            <button
-              className="primary-btn"
-              type="submit"
-            >
-              Send Message
-              <ArrowIcon />
-            </button>
+    
 
-          </form>
+            {formStatus === "success" && (
+
+              <div className="success-message">
+
+                <div className="success-icon">
+                  ✓
+                </div>
+
+
+                <h3>
+                  Message sent!
+                </h3>
+
+
+                <p>
+                  Thanks for reaching out.
+                  <br />
+                  I'll get back to you as soon as possible.
+                </p>
+
+
+                <button
+                  type="button"
+                  className="secondary-btn"
+                  onClick={() => setFormStatus("idle")}
+                >
+                  Send another message
+                </button>
+
+              </div>
+
+            )}
+
+
+  
+
+            {formStatus !== "success" && (
+
+              <form
+                className="contact-form"
+                onSubmit={handleContactSubmit}
+              >
+
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  disabled={formStatus === "sending"}
+                />
+
+
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  disabled={formStatus === "sending"}
+                />
+
+
+                <textarea
+                  name="message"
+                  rows="5"
+                  placeholder="Tell me about your project..."
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  disabled={formStatus === "sending"}
+                />
+
+
+
+                {formStatus === "error" && (
+
+                  <div className="form-error">
+                    Something went wrong.
+                    Please try again.
+                  </div>
+
+                )}
+
+
+
+
+                <button
+                  className="primary-btn"
+                  type="submit"
+                  disabled={formStatus === "sending"}
+                >
+
+                  {formStatus === "sending" ? (
+
+                    <>
+                      <span className="loading-spinner" />
+                      Sending...
+                    </>
+
+                  ) : (
+
+                    <>
+                      Send Message
+                      <ArrowIcon />
+                    </>
+
+                  )}
+
+                </button>
+
+              </form>
+
+            )}
+
+          </div>
 
         </section>
 
       </main>
 
-      {/* FOOTER */}
+
+
 
       <footer>
 
@@ -638,5 +935,6 @@ ${data.get("message")}`
     </div>
   );
 }
+
 
 export default App;
